@@ -103,7 +103,7 @@ public class DLNotification {
         
     }
     
-    public init (identifier: String, alertTitle: String, alertBody: String, date: Date ) {
+    public init (identifier: String, alertTitle: String, alertBody: String, date: Date, repeats: RepeatingInterval, soundName: String ) {
         
         self.alertBody = alertBody
         self.alertTitle = alertTitle
@@ -111,6 +111,7 @@ public class DLNotification {
         self.repeatInterval = .none
         self.identifier = identifier
         self.repeats = false
+        self.soundName = soundName
         
     }
     

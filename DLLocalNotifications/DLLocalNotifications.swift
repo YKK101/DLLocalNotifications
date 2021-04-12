@@ -16,6 +16,7 @@ public class DLNotificationScheduler {
     
     // Apple allows you to only schedule 64 notifications at a time
     static let maximumScheduledNotifications = 60
+    var userInfo : [AnyHashable : Any] = ["":""]
     
     public init () {}
     
@@ -252,6 +253,7 @@ public class DLNotificationScheduler {
             content.body = notification.alertBody!
             
             content.sound = notification.soundName == "" ? UNNotificationSound.default : UNNotificationSound.init(named: UNNotificationSoundName(rawValue: notification.soundName))
+            content.userInfo = self.userInfo
             
             
             if (notification.soundName == "1") { content.sound = nil}
@@ -293,7 +295,7 @@ public class DLNotificationScheduler {
     
     // You have to manually keep in mind ios 64 notification limit
     
-    public func repeatsFromToDate (identifier: String, alertTitle: String, alertBody: String, fromDate: Date, toDate: Date, interval: Double, repeats: RepeatingInterval, category: String = "åa", sound: String = " ") {
+    public func repeatsFromToDate (identifier: String, alertTitle: String, alertBody: String, fromDate: Date, toDate: Date, interval: Double, repeats: RepeatingInterval, category: String = "åa", sound: String = " ", userInfo:[AnyHashable : Any]) {
         
         
         // Create multiple Notifications
@@ -313,6 +315,7 @@ public class DLNotificationScheduler {
             var notification = DLNotification(identifier: identifier, alertTitle: alertTitle, alertBody: alertBody, fromDateComponents: dateComponents, repeatInterval: repeats)
             notification.category = category
             notification.soundName = sound
+            self.userInfo = userInfo
             print("Dates from notifications : " + notification.fromDateComponents!.debugDescription)
             self.queueNotification(notification: notification)
             nextDate = nextDate.addingTimeInterval(interval)
